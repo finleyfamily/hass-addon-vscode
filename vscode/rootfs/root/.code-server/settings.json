@@ -1,0 +1,118 @@
+{
+    "[home-assistant]": {
+        "editor.autoIndent": "full",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2
+    },
+    "[yaml]": {
+        "editor.autoIndent": "full",
+        "editor.insertSpaces": true,
+        "editor.quickSuggestions": {
+            "comments": false,
+            "other": true,
+            "strings": true
+        },
+        "editor.tabSize": 2
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.renderWhitespace": "boundary",
+    "editor.rulers": [
+        80,
+        88,
+        100,
+        120
+    ],
+    "esphome.validator": "local",
+    "files.associations": {
+        "**/esphome/**/*.yaml": "esphome",
+        "**/esphome/*.yaml": "esphome",
+        "*.dash": "yaml",
+        "*.yaml": "home-assistant"
+    },
+    "files.exclude": {
+        "**/*.db": true,
+        "**/*.db-shm": true,
+        "**/*.db-wal": true,
+        "**/.DS_Store": true,
+        "**/.HA_VERSION": true,
+        "**/.cloud": true,
+        "**/.git": true,
+        "**/.storage": true,
+        "**/__pycache__": true,
+        "**/deps/**": true,
+        "**/node_modules": true,
+        ".Trash-0/**": true
+    },
+    "files.watcherExclude": {
+        "**/*.db": true,
+        "**/*.db-shm": true,
+        "**/*.db-wal": true,
+        "**/*.log": true,
+        "**/.HA_VERSION": true,
+        "**/._*": true,
+        "**/.cloud": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.storage": true,
+        "**/OZW_Log.txt": true,
+        "**/__pycache__/**": true,
+        "**/deps/**": true,
+        "**/node_modules": true,
+        ".Trash-0/**": true,
+        ".nfs**": true
+    },
+    "material-icon-theme.files.associations": {
+        ".coverage": "Codecov",
+        ".shellcheckrc": "Settings",
+        "labels.yml": "Settings",
+        "py.typed": "python",
+        "release-drafter.yml": "Settings"
+    },
+    "material-icon-theme.languages.associations": {
+        "dotenv": "Tune",
+        "jinja-yaml": "jinja"
+    },
+    "search.exclude": {
+        "**/*.db": true,
+        "**/*.db-shm": true,
+        "**/*.db-wal": true,
+        "**/*.log": true,
+        "**/.HA_VERSION": true,
+        "**/._*": true,
+        "**/.cloud": true,
+        "**/.git": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.storage": true,
+        "**/OZW_Log.txt": true,
+        "**/__pycache__/**": true,
+        "**/deps/**": true,
+        "**/node_modules": true,
+        ".Trash-0/**": true
+    },
+    "telemetry.enableTelemetry": false,
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.shell.linux": "/usr/bin/zsh",
+    "update.mode": "none",
+    "workbench.colorCustomizations": {
+        "[One Dark Pro]": {
+            "editorInlayHint.background": "#282c34",
+            "editorInlayHint.foreground": "#5c6370"
+        }
+    },
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.iconTheme": "material-icon-theme",
+    "yaml.customTags": [
+        "!env_var scalar",
+        "!include_dir_list scalar",
+        "!include_dir_merge_list scalar",
+        "!include_dir_merge_named scalar",
+        "!include_dir_named scalar",
+        "!include scalar",
+        "!secret scalar"
+    ],
+    "yaml.format.enable": true
+}

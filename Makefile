@@ -19,6 +19,10 @@ run-pre-commit: ## run pre-commit for all files
 		--all-files \
 		--color always
 
+settings-hash: ## generate hash of settings file to apply updates to default settings
+	@sha512sum vscode/rootfs/root/.code-server/settings.json | cut -d " " -f 1
+	@echo "add the above value to PREVIOUS_DEFAULT_CONFIG_HASHES in vscode/rootfs/etc/s6-overlay/s6-rc.d/init-code-server/run"
+
 setup: setup-poetry setup-pre-commit setup-npm ## setup dev environment
 
 setup-npm: ## install node dependencies with npm

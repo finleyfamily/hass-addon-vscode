@@ -1,3 +1,4 @@
+!**/rootfs/tmp/*
 **/*$py.class
 **/*.egg
 **/*.egg-info/
