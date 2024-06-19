@@ -103,6 +103,8 @@ RUN set -ex; \
   PYTHON_CONFIGURE_OPTS="--enable-shared" \
   PROFILE_TASK='-m test.regrtest --pgo -j0' pyenv install "${PYENV_VERSION}"; \
   pyenv global "${PYENV_VERSION}"; \
+  pip install setuptools wheel \
+    --disable-pip-version-check --no-cache-dir --no-warn-script-location; \
   pip install --requirement /tmp/requirements.txt \
     --disable-pip-version-check \
     --no-cache-dir \
@@ -118,7 +120,9 @@ RUN set -ex; \
 # Install code-server                                                         #
 # --------------------------------------------------------------------------- #
 RUN set -ex; \
-  if [[ "${BUILD_ARCH}" = "aarch64" ]] || [[ "${BUILD_ARCH}" = "armhf" ]]; then export ARCH="arm64"; fi; \
+  if [[ "${BUILD_ARCH}" = "aarch64" ]] || [[ "${BUILD_ARCH}" = "armhf" ]] || [[ "${BUILD_ARCH}" = "armv7" ]]; then \
+    export ARCH="arm64"; \
+  fi; \
   if [[ "${BUILD_ARCH}" = "amd64" ]]; then export ARCH="amd64"; fi; \
   curl -J -L -o /tmp/code.tar.gz \
     "https://github.com/coder/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION#v}-linux-${ARCH}.tar.gz"; \
