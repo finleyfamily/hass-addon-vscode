@@ -37,6 +37,7 @@ RUN set -ex; \
   apt-get update; \
   apt-get install -y --no-install-recommends \
     build-essential \
+    cargo \
     colordiff \
     curl \
     git \
@@ -58,6 +59,7 @@ RUN set -ex; \
     net-tools \
     nmap \
     openssh-client openssh-server \
+    pkg-config \
     tk-dev \
     unzip \
     uuid-runtime \
