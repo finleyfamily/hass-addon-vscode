@@ -3,11 +3,11 @@ arch:
   # - aarch64
   - amd64
   # - armhf
+  # - armv7
 audio: true
 description: Fully featured Visual Studio Code (vscode) experience integrated into the Home Assistant frontend.
 devices:
   - /dev/mem
-devicetree: true
 docker_api: true
 gpio: true
 hassio_api: true
@@ -18,7 +18,6 @@ ingress: true
 ingress_port: 9080
 ingress_stream: true
 init: false
-journald: true
 map:
   - addons:rw
   - all_addon_configs:rw
@@ -77,4 +76,4 @@ startup: services
 uart: true
 url: https://github.com/finleyfamily/hass-addon-vscode
 usb: true
-version: 0.0.0
+version: 0.0.0-dev2
