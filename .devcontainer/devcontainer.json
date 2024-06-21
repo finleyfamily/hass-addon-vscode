@@ -9,7 +9,10 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "Compulim.vscode-clock",
                 "esbenp.prettier-vscode",
+                "SirTori.indenticator",
+                "oderwat.indent-rainbow",
                 "streetsidesoftware.code-spell-checker"
             ],
             "settings": {
