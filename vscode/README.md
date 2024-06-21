@@ -1,27 +1,20 @@
 # Home Assistant Add-on: vscode
 
-> [!CAUTION]
+> ⚠️ **CAUTION** ⚠️
+>
 > This add-on is still in early development. Use at your own risk.
+
+<!-- [![Open this add-on in your Home Assistant instance.][addon-badge]][addon] -->
 
 A [Home Assistant] add-on for vscode ([code-server]) with build-in support for SSH.
 
 This add-on combines elements of of [hassio-addons/addon-ssh] and [hassio-addons/addon-vscode] to create an all-in-one addition to your [Home Assistant] server.
 
-## Development
+<!-- add full url -->
 
-### Local Testing
+<!-- [addon]: https://my.home-assistant.io/redirect/supervisor_addon/ -->
 
-1. Open project in it's dev container.
-
-1. From the command palette, run `Tasks: Run Task` then select `Start Home Assistant`.
-
-1. Navigate to [http://localhost:7123](http://localhost:7123/) for the local development instance of [Home Assistant].
-
-   1. [Add-ons Dashboard](http://localhost:7123/hassio/dashboard)
-   1. [Add-on Store](http://localhost:7123/hassio/store)
-
-> [!NOTE]
-> See [Local add-on testing](https://developers.home-assistant.io/docs/add-ons/testing) for more details.
+<!-- [addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg -->
 
 [code-server]: https://github.com/coder/code-server
 [hassio-addons/addon-ssh]: https://github.com/hassio-addons/addon-ssh

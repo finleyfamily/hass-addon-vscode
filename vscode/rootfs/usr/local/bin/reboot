@@ -1,0 +1,7 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community Add-on: Advanced SSH & Web Terminal
+# This script overrides the reboot command to reboot the host machine.
+# ==============================================================================
+bashio::host.reboot

@@ -1,0 +1,26 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community Add-on: Studio Code Server
+# Runs the code-server
+# ==============================================================================
+declare -a options
+declare config_path
+
+bashio::log.info 'Starting code-server...'
+
+config_path="/config"
+if bashio::config.has_value 'config_path'; then
+    config_path=$(bashio::config 'config_path')
+fi
+
+options+=(--port 9080)
+options+=(--host 0.0.0.0)
+
+# Export env variables for the Home Assistant extension
+export HASS_SERVER="http://supervisor/core"
+export HASS_TOKEN="${SUPERVISOR_TOKEN:-}"
+
+# Run the code server
+cd "${config_path}" || bashio::exit.nok "Could not change working directory"
+exec code-server "${options[@]}" "${config_path}"

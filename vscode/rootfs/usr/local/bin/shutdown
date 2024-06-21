@@ -1,0 +1,8 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community Add-on: Advanced SSH & Web Terminal
+# This script overrides the shutdown command to shutdown the host machine.
+# ==============================================================================
+bashio::log.red "Shutdown is not allowed!";
+exit 1;

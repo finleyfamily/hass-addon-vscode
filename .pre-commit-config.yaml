@@ -21,7 +21,9 @@ repos:
         files: |
           (?x)^(
             \.dockerignore|
-            \.gitignore
+            \.gitignore|
+            vscode/rootfs/root/vscode\.extensions
+            vscode/rootfs/tmp/requirements\.txt
           )$
       - id: pretty-format-json
         args: [--autofix, --indent, '4']

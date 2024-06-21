@@ -1,11 +1,22 @@
 {
     "allowCompoundWords": true,
+    "ignorePaths": [
+        "**/vscode/rootfs/etc/ssh/ssh*_config",
+        "**/vscode/rootfs/root/vscode.extensions"
+    ],
     "import": [
         "@itprokyle/cspell-dict/cspell-ext.json"
     ],
     "maxNumberOfProblems": 100,
     "version": "0.2",
     "words": [
-        "hass"
+        "contenv",
+        "esbenp",
+        "frenck",
+        "KHTML",
+        "libbz",
+        "libncursesw",
+        "regrtest",
+        "zxvf"
     ]
 }
