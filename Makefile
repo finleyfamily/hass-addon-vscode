@@ -37,6 +37,10 @@ lint-shellcheck: ## lint shell scripts using shellcheck
 	bash ./tests/shellcheck.sh && \
 	echo ""
 
+permissions: ## set script permissions
+	@find ./vscode/rootfs/etc/s6-overlay/s6-rc.d -type f \( -name run -or -name finish \) -prune -exec chmod +x {} \;
+	@find ./vscode/rootfs/usr/local/bin -type f -prune -exec chmod +x {} \;
+
 run-pre-commit: ## run pre-commit for all files
 	@poetry run pre-commit run $(PRE_COMMIT_OPTS) \
 		--all-files \
