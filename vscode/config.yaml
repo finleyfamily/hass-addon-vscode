@@ -1,8 +1,8 @@
 apparmor: false
 arch:
-  - aarch64
+  # - aarch64
   - amd64
-  - armhf
+  # - armhf
 audio: true
 description: Fully featured Visual Studio Code (vscode) experience integrated into the Home Assistant frontend.
 devices:
