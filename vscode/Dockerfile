@@ -59,6 +59,7 @@ RUN set -ex; \
     net-tools \
     nmap \
     openssh-client openssh-server \
+    pwgen \
     pkg-config \
     tk-dev \
     unzip \

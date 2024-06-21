@@ -76,4 +76,4 @@ startup: services
 uart: true
 url: https://github.com/finleyfamily/hass-addon-vscode
 usb: true
-version: 0.0.0-dev5
+version: 0.0.0-dev6
