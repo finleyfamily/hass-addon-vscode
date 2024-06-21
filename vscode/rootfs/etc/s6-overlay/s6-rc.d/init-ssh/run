@@ -99,12 +99,12 @@ username=$(bashio::string.lower "${username}")
 if [[ "${username}" != "root" ]]; then
 
   # Create an user account
-  adduser --disabled-password "${username}" --shell "/usr/bin/zsh" \
+  adduser --disabled-password "${username}" --shell "/usr/bin/sh" \
     || bashio::exit.nok 'Failed creating the user account'
 
-  # Add new user to the wheel group
-  adduser "${username}" wheel \
-    || bashio::exit.nok 'Failed adding user to wheel group'
+  # Add new user to the sudo group
+  usermod -aG sudo "${username}" \
+    || bashio::exit.nok 'Failed adding user to sudo group'
 
   # Ensure new user switches to root after login
   echo 'exec sudo -i' > "/home/${username}/.profile" \
