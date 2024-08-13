@@ -1,5 +1,5 @@
 # borrowed from https://github.com/hassio-addons/workflows/blob/main/.github/workflows/addon-ci.yaml
-name: On Push
+name: CI
 
 on:
   pull_request:  # any pull request
@@ -158,13 +158,4 @@ jobs:
         env:
           SHELLCHECK_OPTS: -s bash
   spellcheck:
-    # There is an official action published by cSpell.
-    # v1.1.1 was tested but did not function as desired so we are using the CLI.
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - run: npm ci
-      - run: make spellcheck
+    uses: finleyfamily/workflows/.github/workflows/spellcheck.yml@master
