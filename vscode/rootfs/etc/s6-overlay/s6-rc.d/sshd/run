@@ -11,6 +11,16 @@ if ! bashio::var.has_value "$(bashio::addon.port 22)"; then
   exec sleep 864000
 fi
 
+function check_privsep_dir() {
+  # Create the PrivSep empty dir if necessary
+  if [ ! -d '/run/sshd' ]; then
+    mkdir '/run/sshd'
+    chmod 0755 '/run/sshd'
+  fi
+}
+
+check_privsep_dir
+
 bashio::log.info 'Starting the SSH daemon...'
 
 # Default options
