@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.3.4
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.4.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -17,9 +17,9 @@ ARG BUILD_VERSION
 # App versions                                                                #
 # --------------------------------------------------------------------------- #
 # https://github.com/home-assistant/cli/releases
-ARG HA_CLI_VERSION="4.34.0"
+ARG HA_CLI_VERSION="4.35.0"
 # https://github.com/coder/code-server/releases
-ARG CODE_SERVER_VERSION="v4.90.2"
+ARG CODE_SERVER_VERSION="v4.91.1"
 # https://github.com/python-poetry/poetry/releases
 ARG POETRY_VERSION="1.8.3"
 ARG PYTHON_VERSION="3.12.4"
