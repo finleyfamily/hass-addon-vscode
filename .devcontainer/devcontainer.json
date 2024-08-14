@@ -4,16 +4,26 @@
         "7357:4357"
     ],
     "containerEnv": {
+        "TZ": "${localEnv:TZ:US/Eastern}",
         "WORKSPACE_DIRECTORY": "${containerWorkspaceFolder}"
     },
     "customizations": {
         "vscode": {
             "extensions": [
+                "charliermarsh.ruff",
                 "Compulim.vscode-clock",
+                "DavidAnson.vscode-markdownlint",
+                "editorconfig.editorconfig",
                 "esbenp.prettier-vscode",
-                "SirTori.indenticator",
+                "lextudio.restructuredtext",
+                "ms-python.black-formatter",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
                 "oderwat.indent-rainbow",
-                "streetsidesoftware.code-spell-checker"
+                "redhat.vscode-yaml",
+                "SirTori.indenticator",
+                "streetsidesoftware.code-spell-checker",
+                "tamasfe.even-better-toml"
             ],
             "settings": {
                 "editor.formatOnPaste": false,

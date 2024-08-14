@@ -10,15 +10,19 @@
     "maxNumberOfProblems": 100,
     "version": "0.2",
     "words": [
+        "Anson",
         "Compulim",
+        "KHTML",
         "contenv",
         "esbenp",
         "frenck",
         "indenticator",
-        "KHTML",
+        "lextudio",
         "libbz",
         "libncursesw",
+        "pylance",
         "regrtest",
+        "tamasfe",
         "zxvf"
     ]
 }
