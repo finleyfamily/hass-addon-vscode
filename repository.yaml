@@ -1,4 +1,0 @@
-# https://developers.home-assistant.io/docs/add-ons/repository#repository-configuration
-name: finleyfamily/hass-addon-vscode
-url: https://github.com/finleyfamily/hass-addon-vscode
-maintainer: Kyle Finley <kyle@finley.sh>

@@ -1,9 +1,7 @@
 apparmor: false
 arch:
-  # - aarch64
+  - aarch64
   - amd64
-  # - armhf
-  # - armv7
 audio: true
 description: Fully featured Visual Studio Code (vscode) experience integrated into the Home Assistant frontend.
 devices:
@@ -76,4 +74,4 @@ startup: services
 uart: true
 url: https://github.com/finleyfamily/hass-addon-vscode
 usb: true
-version: 0.0.0-dev6
+version: dev
