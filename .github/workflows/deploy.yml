@@ -17,3 +17,5 @@ jobs:
     uses: finleyfamily/workflows/.github/workflows/hass-addon.deploy.yml@master
     secrets:
       app-private-key: ${{ secrets.FINLEY_APP_PRIVATE_KEY }}
+    with:
+      slug: ${{ github.event.repository.name }}

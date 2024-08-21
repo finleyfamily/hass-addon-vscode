@@ -12,3 +12,5 @@ jobs:
     permissions:
       pull-requests: read
     uses: finleyfamily/workflows/.github/workflows/hass-addon.ci.yml@master
+    with:
+      slug: ${{ github.event.repository.name }}
