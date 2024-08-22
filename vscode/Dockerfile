@@ -33,7 +33,7 @@ ENV TERM="xterm-256color"
 ###############################################################################
 # Install packages, ha, pyenv, etc                                            #
 # --------------------------------------------------------------------------- #
-RUN set -e; \
+RUN set -ex; \
   apt-get update; \
   apt-get install -y --no-install-recommends \
     build-essential \
@@ -122,7 +122,7 @@ RUN set -e; \
 ###############################################################################
 # Install code-server                                                         #
 # --------------------------------------------------------------------------- #
-RUN set -e; \
+RUN set -ex; \
   if [[ "${BUILD_ARCH}" = "aarch64" ]] || [[ "${BUILD_ARCH}" = "armhf" ]] || [[ "${BUILD_ARCH}" = "armv7" ]]; then \
     export ARCH="arm64"; \
   fi; \
@@ -130,7 +130,7 @@ RUN set -e; \
   curl -J -L -o /tmp/code.tar.gz \
     "https://github.com/coder/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION#v}-linux-${ARCH}.tar.gz"; \
   mkdir -p /usr/local/lib/code-server; \
-  tar zxvf /tmp/code.tar.gz --strip 1 -C /usr/local/lib/code-server; \
+  tar -zxf /tmp/code.tar.gz --strip 1 -C /usr/local/lib/code-server; \
   ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server; \
   install-code-extensions --global;
 

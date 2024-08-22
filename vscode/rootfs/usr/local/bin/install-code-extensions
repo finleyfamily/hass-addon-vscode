@@ -1,7 +1,6 @@
-#! /command/with-contenv bashio
+#! /usr/local/env bash
 #
 # Install vscode extensions.
-# shellcheck shell=bash
 
 set -eo pipefail;
 
@@ -89,13 +88,11 @@ while [[ "$1" != "" ]]; do
 done
 
 if [[ ${__EXIT_CODE} -gt 0 ]]; then
-  bashio::log.fatal
-  bashio::log.fatal "${__SCRIPT_NAME}: Fatal error(s) detected exiting...";
-  bashio::log.fatal
+  echo "${__SCRIPT_NAME}: Fatal error(s) detected exiting...";
   for error_text in "${__ERRORS[@]}"; do
-    bashio::log.fatal "   ${error_text}";
+    echo "   ${error_text}";
   done
-  bashio::exit.nok;
+  exit ${__EXIT_CODE};
 fi
 
 case $__GLOBAL_INSTALL in
