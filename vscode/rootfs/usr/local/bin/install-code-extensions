@@ -1,12 +1,35 @@
-#! /usr/bin/env bash
+#! /command/with-contenv bashio
 #
 # Install vscode extensions.
+# shellcheck shell=bash
 
-set -eo pipefail
+set -eo pipefail;
 
-__EXTENSION_FILE="${1:-/root/vscode.extensions}"
+__EXTENSION_FILE="/root/vscode.extensions";
+__GLOBAL_INSTALL="false";
 
-function __install_code_extensions_old {
+__EXIT_CODE=0;
+__ERRORS=();
+__SCRIPT_NAME="install-code-extensions"
+
+function __help {
+  cat << HEREDOC
+
+  Install extensions for Coder (vscode).
+
+  Usage: ${__SCRIPT_NAME} [OPTIONS] [PATH]
+
+  Arguments:
+      -h, --help                   show this help message and exit
+      -f, --extensions-file PATH   path to a file continaing a list of extensions to install
+                                    (default: ${__EXTENSION_FILE})
+      --global                     install extensions globally
+                                    (probably only useful for building the image)
+
+HEREDOC
+}
+
+function __install_code_extensions_global {
   local extention slug uuid vendor version;
 
   uuid=$(uuidgen);
@@ -20,7 +43,7 @@ function __install_code_extensions_old {
     version="${ext##*#}";
     echo "Installing vscode extension: ${slug} by ${vendor} @ ${version}";
     echo "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage";
-    url -JL --retry 5 -o "/tmp/${extention}-${version}.vsix" \
+    curl -JL --retry 5 -o "/tmp/${extention}-${version}.vsix" \
       -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" \
       -H "x-market-user-id: ${uuid}" \
         "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage";
@@ -39,9 +62,50 @@ function __install_code_extensions {
   mkdir -p /data/vscode/extensions;
 
   for ext in ${extensions//$'\n'/ }; do
-    code-server --install-extension "${ext}";
+    code-server --force --install-extension "${ext}";
   done;
   code-server --list-extensions;
 }
 
-__install_code_extensions;
+while [[ "$1" != "" ]]; do
+  case $1 in
+    --help | -h)
+      __help; exit;
+      ;;
+    --extensions-file | -f)
+      shift;
+      __EXTENSION_FILE="$1";
+      shift;
+      ;;
+    --global)
+      __GLOBAL_INSTALL="true";
+      shift;
+      ;;
+    *)
+      __ERRORS+=("Unrecognized argument: $1");
+      __EXIT_CODE=1;
+      ;;
+  esac
+done
+
+if [[ ${__EXIT_CODE} -gt 0 ]]; then
+  bashio::log.fatal
+  bashio::log.fatal "${__SCRIPT_NAME}: Fatal error(s) detected exiting...";
+  bashio::log.fatal
+  for error_text in "${__ERRORS[@]}"; do
+    bashio::log.fatal "   ${error_text}";
+  done
+  bashio::exit.nok;
+fi
+
+case $__GLOBAL_INSTALL in
+  false)
+    __install_code_extensions;
+    ;;
+  true)
+    __install_code_extensions_global;
+    ;;
+  *)
+    __ERRORS+=("Unrecognized value for global install: ${__GLOBAL_INSTALL}");
+    ;;
+esac
