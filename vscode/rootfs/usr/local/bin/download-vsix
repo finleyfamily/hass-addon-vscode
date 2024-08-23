@@ -39,6 +39,7 @@ def download_vscode_extension(
     tmp_file = (
         TMP_DIR / f"{content['MoreInfo']['UniqueIdentifierValue']}-{version}.vsix"
     )
+    print(f"downloading file from {download_url}...")
     with tmp_file.open("wb") as f:
         f.write(requests.get(download_url, allow_redirects=True, timeout=30).content)
     print(f"downloaded extension to {tmp_file}")
@@ -66,8 +67,10 @@ def _extract_content(soup: BeautifulSoup) -> dict[str, Any] | None:
 def _extract_latest_download_url(content: dict[str, Any]) -> str:
     """Extract latest download URL from page."""
     rv = content["AssetUri"]
-    if "VsixManifestAssetType" in content:
-        rv += f"/{content['VsixManifestAssetType']}"
+    if "VsixManifestAssetType" in content and content["VsixManifestAssetType"].endswith(
+        "VsixManifest"
+    ):
+        rv += "/Microsoft.VisualStudio.Services.VSIXPackage"
     else:
         rv += "/vspackage"  # cspell:disable-line
     return rv
@@ -83,8 +86,7 @@ if __name__ == "__main__":
         print("[ERROR] extension ID must be provided")
         sys.exit(1)
     TMP_DIR.mkdir(exist_ok=True, parents=True)
-    download_vscode_extension(*sys.argv[1].split("@"))
-    # try:
-
-    # except Exception as exc:
-    #     print(f"[ERROR] failed to download {sys.argv[1]}: {exc}")
+    try:
+        download_vscode_extension(*sys.argv[1].split("@"))
+    except Exception as exc:
+        print(f"[ERROR] failed to download {sys.argv[1]}: {exc}")
