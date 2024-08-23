@@ -39,9 +39,10 @@ function __install_code_extensions_global {
     download-vsix "${extention}";
   done < "${__EXTENSION_FILE}";
 
-  vsix_files="$(find /tmp/extensions -type f -name '*.vsix' -prune)"
+  vsix_files="$(find /tmp/extensions -type f -name '*.vsix' -prune)";
   for vsix in ${vsix_files}; do
-    dir_name="$(basename "${vsix}" | rev | cut -f 2- -d '.' | rev)"
+    dir_name="$(basename "${vsix}" | rev | cut -f 2- -d '.' | rev)";
+    mkdir -p "/usr/local/lib/code-server/lib/vscode/extensions/${dir_name}";
     bsdtar --strip-components=1 -xf "${vsix}" \
       -C "/usr/local/lib/code-server/lib/vscode/extensions/${dir_name}" extension;
   done
