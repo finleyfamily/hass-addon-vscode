@@ -65,7 +65,7 @@ def _extract_content(soup: BeautifulSoup) -> dict[str, Any] | None:
 
 def _extract_latest_download_url(content: dict[str, Any]) -> str:
     """Extract latest download URL from page."""
-    rv = content["AssetUrl"]
+    rv = content["AssetUri"]
     if "VsixManifestAssetType" in content:
         rv += f"/{content['VsixManifestAssetType']}"
     else:
@@ -83,4 +83,7 @@ if __name__ == "__main__":
         print("[ERROR] extension ID must be provided")
         sys.exit(1)
     TMP_DIR.mkdir(exist_ok=True, parents=True)
-    download_vscode_extension(*sys.argv[1].split("@"))
+    try:
+        download_vscode_extension(*sys.argv[1].split("@"))
+    except Exception as exc:
+        print(f"[ERROR] failed to download {sys.argv[1]}: {exc}")
