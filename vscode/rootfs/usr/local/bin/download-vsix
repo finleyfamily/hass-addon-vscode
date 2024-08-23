@@ -1,0 +1,86 @@
+#! /usr/bin/env python3
+"""Download vsix files from https://marketplace.visualstudio.com."""
+
+from __future__ import annotations
+
+import json
+import sys
+import tempfile
+from pathlib import Path
+from typing import Any
+
+import requests
+from bs4 import BeautifulSoup
+
+BASE_URL = "https://marketplace.visualstudio.com"
+TMP_DIR = Path(tempfile.gettempdir()) / "extensions"
+
+
+def download_vscode_extension(
+    extension_id: str, version: str | None = None, *_args: Any
+) -> None:
+    """Download a vscode extension from the marketplace."""
+    soup = BeautifulSoup(
+        _get_vscode_extension_page(extension_id).content, "html.parser"
+    )
+    content = _extract_content(soup)
+    if not content:
+        print(
+            f"[ERROR] expected content could not be retrieved from the page for {extension_id}"
+        )
+        return
+    download_url = _extract_latest_download_url(content)
+    if version:
+        split_url = download_url.split("/")
+        split_url[6] = version
+        download_url = "/".join(split_url)
+    else:
+        version = content["MoreInfo"]["VersionValue"]
+    tmp_file = (
+        TMP_DIR / f"{content['MoreInfo']['UniqueIdentifierValue']}-{version}.vsix"
+    )
+    with tmp_file.open() as f:
+        f.write(requests.get(download_url.content))
+    print(f"downloaded extension to {tmp_file}")
+
+
+def _construct_extension_url(extension_id: str) -> str:
+    """Construct the extension URL."""
+    return f"{BASE_URL}/items?itemName={extension_id}"
+
+
+def _extract_content(soup: BeautifulSoup) -> dict[str, Any] | None:
+    """Extract content from the page."""
+    result_list = soup.find_all("script", class_="jiContent")
+    for result in result_list:
+        try:
+            content = json.loads(result.text)
+        except Exception:
+            print(f"[ERROR] unable to parse response:\n{result.text}")
+            continue
+        if "AssetUri" not in content:
+            continue
+        return content
+
+
+def _extract_latest_download_url(content: dict[str, Any]) -> str:
+    """Extract latest download URL from page."""
+    rv = content["AssetUrl"]
+    if "VsixManifestAssetType" in content:
+        rv += f"/{content['VsixManifestAssetType']}"
+    else:
+        rv += "/vspackage"  # cspell:disable-line
+    return rv
+
+
+def _get_vscode_extension_page(extension_id: str) -> requests.Response:
+    """Get content of vscode extension page."""
+    return requests.get(_construct_extension_url(extension_id))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("[ERROR] extension ID must be provided")
+        sys.exit(1)
+    TMP_DIR.mkdir(exist_ok=True, parents=True)
+    download_vscode_extension(*sys.argv[1].split("@"))

@@ -63,7 +63,6 @@ RUN set -ex; \
     pkg-config \
     tk-dev \
     unzip \
-    uuid-runtime \
     wget \
     xz-utils \
     zip \
@@ -123,6 +122,7 @@ RUN set -e; \
 # Install code-server                                                         #
 # --------------------------------------------------------------------------- #
 RUN set -ex; \
+  source ~/.bash_profile; \
   if [[ "${BUILD_ARCH}" = "aarch64" ]] || [[ "${BUILD_ARCH}" = "armhf" ]] || [[ "${BUILD_ARCH}" = "armv7" ]]; then \
     export ARCH="arm64"; \
   fi; \
