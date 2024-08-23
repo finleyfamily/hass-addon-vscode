@@ -2,33 +2,50 @@
 #
 # Install vscode extensions.
 
-set -eo pipefail
+set -eo pipefail;
 
-__EXTENSION_FILE="${1:-/root/vscode.extensions}"
+__EXTENSION_FILE="/root/vscode.extensions";
+__GLOBAL_EXTENSIONS_DIR="/usr/local/lib/code-server/lib/vscode/extensions";
+__GLOBAL_INSTALL="false";
 
-function __install_code_extensions_old {
-  local extention slug uuid vendor version;
+__EXIT_CODE=0;
+__ERRORS=();
+__SCRIPT_NAME="install-code-extensions"
 
-  uuid=$(uuidgen);
+function __help {
+  cat << HEREDOC
+
+  Install extensions for Coder (vscode).
+
+  Usage: ${__SCRIPT_NAME} [OPTIONS] [PATH]
+
+  Arguments:
+      -h, --help                   show this help message and exit
+      -f, --extensions-file PATH   path to a file continaing a list of extensions to install
+                                    (default: ${__EXTENSION_FILE})
+      --global                     install extensions globally
+                                    (probably only useful for building the image)
+
+HEREDOC
+}
+
+function __install_code_extensions_global {
+  local dir_name extention vsix vsix_files;
 
   mkdir -p /root/.code-server/extensions;
 
   while read -r ext; do
     extention="${ext%%#*}";
-    vendor="${extention%%.*}";
-    slug="${extention#*.}";
-    version="${ext##*#}";
-    echo "Installing vscode extension: ${slug} by ${vendor} @ ${version}";
-    echo "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage";
-    url -JL --retry 5 -o "/tmp/${extention}-${version}.vsix" \
-      -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" \
-      -H "x-market-user-id: ${uuid}" \
-        "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vendor}/vsextensions/${slug}/${version}/vspackage";
-    mkdir -p "/usr/local/lib/code-server/lib/vscode/extensions/${extention}-${version}";
-    bsdtar --strip-components=1 -xf "/tmp/${extention}-${version}.vsix" \
-      -C "/usr/local/lib/code-server/lib/vscode/extensions/${extention}-${version}" extension;
-
+    download-vsix "${extention}";
   done < "${__EXTENSION_FILE}";
+
+  vsix_files="$(find /tmp/extensions -type f -name '*.vsix' -prune)";
+  for vsix in ${vsix_files}; do
+    dir_name="$(basename "${vsix}" | rev | cut -f 2- -d '.' | rev)";
+    mkdir -p "/usr/local/lib/code-server/lib/vscode/extensions/${dir_name}";
+    bsdtar --strip-components=1 -xf "${vsix}" \
+      -C "/usr/local/lib/code-server/lib/vscode/extensions/${dir_name}" extension;
+  done
   ls -la /usr/local/lib/code-server/lib/vscode/extensions/;
 }
 
@@ -39,9 +56,48 @@ function __install_code_extensions {
   mkdir -p /data/vscode/extensions;
 
   for ext in ${extensions//$'\n'/ }; do
-    code-server --install-extension "${ext}";
+    code-server --force --install-extension "${ext}";
   done;
   code-server --list-extensions;
 }
 
-__install_code_extensions;
+while [[ "$1" != "" ]]; do
+  case $1 in
+    --help | -h)
+      __help; exit;
+      ;;
+    --extensions-file | -f)
+      shift;
+      __EXTENSION_FILE="$1";
+      shift;
+      ;;
+    --global)
+      __GLOBAL_INSTALL="true";
+      shift;
+      ;;
+    *)
+      __ERRORS+=("Unrecognized argument: $1");
+      __EXIT_CODE=1;
+      ;;
+  esac
+done
+
+if [[ ${__EXIT_CODE} -gt 0 ]]; then
+  echo "${__SCRIPT_NAME}: Fatal error(s) detected exiting...";
+  for error_text in "${__ERRORS[@]}"; do
+    echo "   ${error_text}";
+  done
+  exit ${__EXIT_CODE};
+fi
+
+case $__GLOBAL_INSTALL in
+  false)
+    __install_code_extensions;
+    ;;
+  true)
+    __install_code_extensions_global;
+    ;;
+  *)
+    __ERRORS+=("Unrecognized value for global install: ${__GLOBAL_INSTALL}");
+    ;;
+esac

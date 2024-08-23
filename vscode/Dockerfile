@@ -63,7 +63,6 @@ RUN set -ex; \
     pkg-config \
     tk-dev \
     unzip \
-    uuid-runtime \
     wget \
     xz-utils \
     zip \
@@ -91,7 +90,7 @@ COPY rootfs /
 ###############################################################################
 # Install nvm                                                                 #
 # --------------------------------------------------------------------------- #
-RUN set -ex; \
+RUN set -e; \
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash; \
   source ~/.nvm/nvm.sh; \
   nvm install "lts/iron" --latest-npm; \
@@ -101,7 +100,7 @@ RUN set -ex; \
 ###############################################################################
 # Install Python & dependencies                                               #
 # --------------------------------------------------------------------------- #
-RUN set -ex; \
+RUN set -e; \
   source ~/.bash_profile; \
   PYTHON_CONFIGURE_OPTS="--enable-shared" \
   PROFILE_TASK='-m test.regrtest --pgo -j0' pyenv install "${PYENV_VERSION}"; \
@@ -123,6 +122,7 @@ RUN set -ex; \
 # Install code-server                                                         #
 # --------------------------------------------------------------------------- #
 RUN set -ex; \
+  source ~/.bash_profile; \
   if [[ "${BUILD_ARCH}" = "aarch64" ]] || [[ "${BUILD_ARCH}" = "armhf" ]] || [[ "${BUILD_ARCH}" = "armv7" ]]; then \
     export ARCH="arm64"; \
   fi; \
@@ -130,9 +130,9 @@ RUN set -ex; \
   curl -J -L -o /tmp/code.tar.gz \
     "https://github.com/coder/code-server/releases/download/${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION#v}-linux-${ARCH}.tar.gz"; \
   mkdir -p /usr/local/lib/code-server; \
-  tar zxvf /tmp/code.tar.gz --strip 1 -C /usr/local/lib/code-server; \
+  tar -zxf /tmp/code.tar.gz --strip 1 -C /usr/local/lib/code-server; \
   ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server; \
-  install-code-extensions;
+  install-code-extensions --global;
 
 ###############################################################################
 # Health check                                                                #
@@ -165,10 +165,8 @@ LABEL \
 ###############################################################################
 # Cleanup                                                                     #
 # --------------------------------------------------------------------------- #
-RUN set -ex; \
-  apt-get purge --auto-remove -y \
-    libarchive-tools \
-    uuid-runtime; \
+RUN set -e; \
+  apt-get clean; \
   find /usr/local \
     \( -type d -a -name test -o -name tests -o -name '__pycache__' \) \
     -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
@@ -176,5 +174,4 @@ RUN set -ex; \
   rm -fr \
     /root/.cache \
     /tmp/* \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/*;
+    /var/{cache,log}/*;

@@ -1,4 +1,6 @@
+beautifulsoup4==4.12.3
 esphome==2024.8.0
 pipx==1.7.1
 pulsemixer==1.5.1
+requests==2.32.3
 yamllint==1.35.1
