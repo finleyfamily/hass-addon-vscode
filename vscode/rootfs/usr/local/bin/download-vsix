@@ -39,8 +39,8 @@ def download_vscode_extension(
     tmp_file = (
         TMP_DIR / f"{content['MoreInfo']['UniqueIdentifierValue']}-{version}.vsix"
     )
-    with tmp_file.open() as f:
-        f.write(requests.get(download_url.content))
+    with tmp_file.open("wb") as f:
+        f.write(requests.get(download_url, allow_redirects=True, timeout=30).content)
     print(f"downloaded extension to {tmp_file}")
 
 
@@ -83,7 +83,8 @@ if __name__ == "__main__":
         print("[ERROR] extension ID must be provided")
         sys.exit(1)
     TMP_DIR.mkdir(exist_ok=True, parents=True)
-    try:
-        download_vscode_extension(*sys.argv[1].split("@"))
-    except Exception as exc:
-        print(f"[ERROR] failed to download {sys.argv[1]}: {exc}")
+    download_vscode_extension(*sys.argv[1].split("@"))
+    # try:
+
+    # except Exception as exc:
+    #     print(f"[ERROR] failed to download {sys.argv[1]}: {exc}")
