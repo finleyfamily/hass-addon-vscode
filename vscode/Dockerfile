@@ -19,7 +19,7 @@ ARG BUILD_VERSION
 # https://github.com/home-assistant/cli/releases
 ARG HA_CLI_VERSION="4.35.0"
 # https://github.com/coder/code-server/releases
-ARG CODE_SERVER_VERSION="v4.91.1"
+ARG CODE_SERVER_VERSION="v4.95.1"
 # https://github.com/python-poetry/poetry/releases
 ARG POETRY_VERSION="1.8.3"
 ARG PYTHON_VERSION="3.12.4"
