@@ -61,6 +61,7 @@ RUN set -ex; \
     openssh-client openssh-server \
     pwgen \
     pkg-config \
+    sudo \
     tk-dev \
     unzip \
     uuid-runtime \
@@ -69,22 +70,22 @@ RUN set -ex; \
     zip \
     zsh \
     zlib1g-dev; \
-    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen; \
-    locale-gen; \
-    rm -rf "${HOME}/.config/pip"; \
-    curl -L -s -o /usr/bin/ha "https://github.com/home-assistant/cli/releases/download/${HA_CLI_VERSION}/ha_${BUILD_ARCH}"; \
-    chmod a+x /usr/bin/ha; \
-    ha completion bash > /usr/share/bash-completion/completions/ha; \
-    git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh; \
-    git clone --single-branch --depth 1 \
-      "https://github.com/zsh-users/zsh-autosuggestions" ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions; \
-    git clone --single-branch --depth 1 \
-       "https://github.com/zsh-users/zsh-syntax-highlighting.git" ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting;\
-    git clone --single-branch --depth 1 \
-      "https://github.com/mattmc3/zshrc.d" ~/.oh-my-zsh/custom/plugins/zshrc.d; \
-    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash; \
-    sed -i -e "s#bin/bash#bin/zsh#" /etc/passwd; \
-    sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+  sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen; \
+  locale-gen; \
+  rm -rf "${HOME}/.config/pip"; \
+  curl -L -s -o /usr/bin/ha "https://github.com/home-assistant/cli/releases/download/${HA_CLI_VERSION}/ha_${BUILD_ARCH}"; \
+  chmod a+x /usr/bin/ha; \
+  ha completion bash > /usr/share/bash-completion/completions/ha; \
+  git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh; \
+  git clone --single-branch --depth 1 \
+    "https://github.com/zsh-users/zsh-autosuggestions" ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions; \
+  git clone --single-branch --depth 1 \
+      "https://github.com/zsh-users/zsh-syntax-highlighting.git" ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting;\
+  git clone --single-branch --depth 1 \
+    "https://github.com/mattmc3/zshrc.d" ~/.oh-my-zsh/custom/plugins/zshrc.d; \
+  curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash; \
+  sed -i -e "s#bin/bash#bin/zsh#" /etc/passwd; \
+  sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
 COPY rootfs /
 
