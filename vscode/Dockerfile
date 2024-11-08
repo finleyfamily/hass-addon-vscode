@@ -17,7 +17,7 @@ ARG BUILD_VERSION
 # App versions                                                                #
 # --------------------------------------------------------------------------- #
 # https://github.com/home-assistant/cli/releases
-ARG HA_CLI_VERSION="4.35.0"
+ARG HA_CLI_VERSION="4.36.0"
 # https://github.com/coder/code-server/releases
 ARG CODE_SERVER_VERSION="v4.95.1"
 # https://github.com/python-poetry/poetry/releases
