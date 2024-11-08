@@ -22,7 +22,7 @@ ARG HA_CLI_VERSION="4.36.0"
 ARG CODE_SERVER_VERSION="v4.95.1"
 # https://github.com/python-poetry/poetry/releases
 ARG POETRY_VERSION="1.8.4"
-ARG PYTHON_VERSION="3.12.4"
+ARG PYTHON_VERSION="3.12.7"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
