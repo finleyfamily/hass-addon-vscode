@@ -41,6 +41,7 @@ RUN set -ex; \
     cargo \
     colordiff \
     curl \
+    direnv \
     git \
     iputils-ping \
     less \
