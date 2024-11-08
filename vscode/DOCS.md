@@ -143,7 +143,7 @@ Please only enable it when you plan on using it.
 
 #### Option `ssh`: `username`
 
-This option allows you to change to username the use when you log in via SSH.
+This option allows you to change the username the use when you log in via SSH.
 It is only utilized for the authentication; you will be the `root` user after you have authenticated.
 Using `root` as the username is possible, but not recommended.
 Usernames will be converted to lower case as per recommended practices.

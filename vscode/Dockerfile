@@ -36,6 +36,7 @@ ENV TERM="xterm-256color"
 RUN set -ex; \
   apt-get update; \
   apt-get install -y --no-install-recommends \
+    bat \
     build-essential \
     cargo \
     colordiff \
@@ -85,6 +86,8 @@ RUN set -ex; \
     "https://github.com/mattmc3/zshrc.d" ~/.oh-my-zsh/custom/plugins/zshrc.d; \
   curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash; \
   sed -i -e "s#bin/bash#bin/zsh#" /etc/passwd; \
+  mkdir -p ~/.local/bin; \
+  ln -s /usr/bin/batcat ~/.local/bin/bat; \
   sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
 COPY rootfs /
