@@ -18,7 +18,7 @@ ARG BUILD_VERSION
 # --------------------------------------------------------------------------- #
 # https://github.com/home-assistant/cli/releases
 # renovate: datasource=github-releases depName=home-assistant/cli versioning=loose
-ARG HA_CLI_VERSION="4.36.0"
+ARG HA_CLI_VERSION="4.38.0"
 # https://github.com/coder/code-server/releases
 # renovate: datasource=github-releases depName=coder/code-server versioning=loose
 ARG CODE_SERVER_VERSION="v4.100.3"
