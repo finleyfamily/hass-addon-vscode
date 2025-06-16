@@ -17,11 +17,15 @@ ARG BUILD_VERSION
 # App versions                                                                #
 # --------------------------------------------------------------------------- #
 # https://github.com/home-assistant/cli/releases
+# renovate: datasource=github-releases depName=home-assistant/cli versioning=loose
 ARG HA_CLI_VERSION="4.36.0"
 # https://github.com/coder/code-server/releases
+# renovate: datasource=github-releases depName=coder/code-server versioning=loose
 ARG CODE_SERVER_VERSION="v4.95.1"
 # https://github.com/python-poetry/poetry/releases
+# renovate: datasource=github-releases depName=python-poetry/poetry versioning=loose
 ARG POETRY_VERSION="1.8.4"
+# renovate: datasource=python-version depName=python versioning=python
 ARG PYTHON_VERSION="3.12.7"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
