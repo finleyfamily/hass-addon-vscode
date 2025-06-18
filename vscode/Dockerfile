@@ -26,7 +26,7 @@ ARG CODE_SERVER_VERSION="v4.100.3"
 # renovate: datasource=github-releases depName=python-poetry/poetry versioning=loose
 ARG POETRY_VERSION="1.8.5"
 # renovate: datasource=python-version depName=python versioning=python
-ARG PYTHON_VERSION="3.12.7"
+ARG PYTHON_VERSION="3.13.5"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
