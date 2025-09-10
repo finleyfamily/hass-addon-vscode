@@ -24,7 +24,7 @@ ARG HA_CLI_VERSION="4.40.1"
 ARG CODE_SERVER_VERSION="v4.103.2"
 # https://github.com/python-poetry/poetry/releases
 # renovate: datasource=github-releases depName=python-poetry/poetry versioning=loose
-ARG POETRY_VERSION="1.8.5"
+ARG POETRY_VERSION="2.1.4"
 # renovate: datasource=python-version depName=python versioning=python
 ARG PYTHON_VERSION="3.13.5"
 
