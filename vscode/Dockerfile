@@ -21,7 +21,7 @@ ARG BUILD_VERSION
 ARG HA_CLI_VERSION="4.45.0"
 # https://github.com/coder/code-server/releases
 # renovate: datasource=github-releases depName=coder/code-server versioning=loose
-ARG CODE_SERVER_VERSION="v4.105.1"
+ARG CODE_SERVER_VERSION="v4.109.2"
 # https://github.com/python-poetry/poetry/releases
 # renovate: datasource=github-releases depName=python-poetry/poetry versioning=loose
 ARG POETRY_VERSION="1.8.5"
