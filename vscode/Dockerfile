@@ -124,9 +124,7 @@ RUN set -ex; \
   pipx install "poetry==${POETRY_VERSION}" --pip-args='--no-cache-dir'; \
   pipx inject poetry poetry-dynamic-versioning poetry-plugin-export --pip-args='--no-cache-dir'; \
   poetry config virtualenvs.create true; \
-  poetry config virtualenvs.in-project true; \
-  poetry config virtualenvs.prefer-active-python true; \
-  poetry config warnings.export false;
+  poetry config virtualenvs.in-project true;
 
 ###############################################################################
 # Install code-server                                                         #
