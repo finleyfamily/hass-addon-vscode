@@ -1,4 +1,4 @@
 esphome==2026.7.4
-pipx==1.16.6
+pipx==1.16.7
 pulsemixer==1.5.1
 yamllint==1.38.0
